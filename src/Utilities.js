@@ -17,3 +17,42 @@ export const buttonNames = {
     eight: "8",
     nine: "9"
 };
+
+export const arrayReducer = (arr, insert, startRemove, endRemove, opFlag) => {
+    if (opFlag) {
+        let beginArray = arr.slice(0, startRemove);
+        let endArray = arr.slice(endRemove);
+        return beginArray.concat(endArray);
+    } else {
+        let beginArray = arr.slice(0, startRemove);
+        let endArray = arr.slice(endRemove + 1);
+        return beginArray.concat(insert).concat(endArray);
+    }
+}
+
+export const reduceExpression = (opArray, numArray, operation) => {
+    let opApplicationResult = null;
+    for (let i = 0; i < opArray.length; i++) {
+        if (opArray[i][0] === operation) {
+            switch (operation) {
+                case "+":
+                    opApplicationResult = numArray[i] + numArray[i + 1];
+                    break;
+                case "-":
+                    opApplicationResult = numArray[i] - numArray[i + 1];
+                    break;
+                case "*":
+                    opApplicationResult = numArray[i] * numArray[i + 1];
+                    break;
+                case "/":
+                    opApplicationResult = numArray[i] / numArray[i + 1];
+                    break;
+                default:
+                    console.log("error");
+                    break;
+            }
+            return [arrayReducer(numArray, opApplicationResult, i, i + 1, false), arrayReducer(opArray, null, i, i + 1, true)];
+        }
+    }
+    return [numArray, opArray];
+}
