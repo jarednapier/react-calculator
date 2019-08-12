@@ -17,13 +17,45 @@ const App = () => {
         } else if(x === "AC") {
             setExpression("0");
         } else if(x === "=") {
-            if(expression[expression.length-1] === "+" || expression[expression.length-1] === "-" || expression[expression.length-1] === "*" || expression[expression.length-1] === "/") {
+            if(expression[expression.length-1] === "+" || expression[expression.length-1] === "-" || expression[expression.length-1] === "*" || expression[expression.length-1] === "/" || expression[expression.length-1] === ".") {
                 return;
             } else {
                // Perform calculation of expression
             }
+        } else if(x === ".") {
+            let doubleDecimalFlag = false;
+            let prevDecimalPlace = -1;
+            for(let i = expression.length - 1; i > -1; i--) {
+                if (expression[i] === ".") {
+                    prevDecimalPlace = i;
+                    break;
+                }
+            }
+            if(prevDecimalPlace !== -1) {
+                let counter = 0;
+                for(let j = prevDecimalPlace + 1; j < expression.length; j++) {
+                    if(expression[j] === "+" || expression[j] === "-" || expression[j] === "*" || expression[j] === "/") {
+                        counter += 1;
+                    } 
+                }
+                if(counter === 0) {
+                    doubleDecimalFlag = true;
+                }
+            }
+            if(doubleDecimalFlag === true) {
+                return;
+            } else {
+                setExpression(expression + x);
+            }
+
         } else if(x === "+" || x === "-" || x === "*" || x === "/") {
-            if(expression[expression.length-1] === "+" || expression[expression.length-1] === "-" || expression[expression.length-1] === "*" || expression[expression.length-1] === "/") {
+            if(expression[expression.length-1] === "+" || expression[expression.length-1] === "-" || expression[expression.length-1] === "*" || expression[expression.length-1] === "/" || expression[expression.length-1] === ".") {
+                return;
+            } else {
+                setExpression(expression + x);
+            }
+        } else if(x === "0") {
+            if(expression[expression.length-1] === "/") {
                 return;
             } else {
                 setExpression(expression + x);
