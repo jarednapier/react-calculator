@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './CSS/Display.css';
 import PropTypes from 'prop-types';
 

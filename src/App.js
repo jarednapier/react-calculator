@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './CSS/App.css';
 import Display from './Display';
 import CalculatorPad from './CalculatorPad';
