@@ -1,0 +1,19 @@
+#display-container {
+    height: 50px;
+    width: 100%;
+    background-color: black;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;  
+}
+
+#display {
+    color: white;
+    margin-right: 10px;
+    font-size: 1.5em;
+    font-family: 'Courier New', Courier, monospace;
+    user-select: none;
+}

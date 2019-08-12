@@ -1,5 +1,8 @@
 .grid {
     display: grid;
+    height: 350px;
+    width: 100%;
+    grid-auto-rows: 1fr;
     grid-template-areas:
         "clear clear divide multiply"
         "seven eight nine subtract"

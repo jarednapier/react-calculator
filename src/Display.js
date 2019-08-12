@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 const Display = (props) => {
     return (
-        <div id="display">
-            {props.expression}
+        <div id="display-container">
+            <span id="display">{props.expression}</span>
         </div>
     );
 };

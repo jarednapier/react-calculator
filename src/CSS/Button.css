@@ -1,0 +1,13 @@
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: thin solid black;
+    color: white;
+    user-select: none;
+}
+
+.button:hover {
+    border: thin solid white;
+    color: black;
+}

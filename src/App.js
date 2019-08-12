@@ -5,10 +5,38 @@ import CalculatorPad from './CalculatorPad';
 
 const App = () => {
 
+    const [expression, setExpression] = useState("0");
+
+    const updateDisplay = (x) => {
+        if(expression === "0") {
+            if(x === "+" || x === "-" || x === "*" || x === "/" || x === "=" || x === "AC") {
+                return;
+            } else {
+                setExpression(x);
+            }  
+        } else if(x === "AC") {
+            setExpression("0");
+        } else if(x === "=") {
+            if(expression[expression.length-1] === "+" || expression[expression.length-1] === "-" || expression[expression.length-1] === "*" || expression[expression.length-1] === "/") {
+                return;
+            } else {
+               // Perform calculation of expression
+            }
+        } else if(x === "+" || x === "-" || x === "*" || x === "/") {
+            if(expression[expression.length-1] === "+" || expression[expression.length-1] === "-" || expression[expression.length-1] === "*" || expression[expression.length-1] === "/") {
+                return;
+            } else {
+                setExpression(expression + x);
+            }
+        } else {
+            setExpression(expression + x);
+        }
+    }; 
+
     return (
-        <div>
-            <Display expression={} />
-            <CalculatorPad expression={} update={} />
+        <div className="calc-container">
+            <Display expression={expression} />
+            <CalculatorPad expression={expression} update={updateDisplay} />
         </div>
     );
 };
