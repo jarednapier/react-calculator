@@ -9,10 +9,6 @@ const App = () => {
     const [expression, setExpression] = useState("0");
 
     const updateDisplay = (x) => {
-        if(Number.parseFloat(expression) < 0) {
-            setExpression("0");
-            return;
-        }
         if (expression === "0") {
             if (x === "+" || x === "-" || x === "*" || x === "/" || x === "=" || x === "AC") {
                 return;
@@ -56,26 +52,70 @@ const App = () => {
                     }
                 }
                 opCountArray = getOperatorCount(operatorLocationArray);
-                for(let i = 0; i < opCountArray[0]; i++) {
+                let i = 0;
+                while (operatorLocationArray.length > opCountArray[2] + opCountArray[3]) {
+                    if (i > operatorLocationArray.length - 1) {
+                        i = 0;
+                    }
+                    if (operatorLocationArray[i][0] === "*") {
                         algoResultArray = reduceExpression(operatorLocationArray, numberArray, "*");
                         numberArray = algoResultArray[0];
                         operatorLocationArray = algoResultArray[1];
+                        i += 1;
+                        continue;
+                    }
+                    if (operatorLocationArray[i][0] === "/") {
+                        algoResultArray = reduceExpression(operatorLocationArray, numberArray, "/");
+                        numberArray = algoResultArray[0];
+                        operatorLocationArray = algoResultArray[1];
+                        i += 1;
+                        continue;
+                    }
+
                 }
-                for(let i = 0; i < opCountArray[1]; i++) {
-                    algoResultArray = reduceExpression(operatorLocationArray, numberArray, "/");
-                    numberArray = algoResultArray[0];
-                    operatorLocationArray = algoResultArray[1];
+                i = 0;
+                while (operatorLocationArray.length > 0) {
+                    if (i > operatorLocationArray.length - 1) {
+                        i = 0;
+                    }
+                    if (operatorLocationArray[i][0] === "+") {
+                        algoResultArray = reduceExpression(operatorLocationArray, numberArray, "+");
+                        numberArray = algoResultArray[0];
+                        operatorLocationArray = algoResultArray[1];
+                        i += 1;
+                        continue;
+                    }
+                    if (operatorLocationArray[i][0] === "-") {
+                        algoResultArray = reduceExpression(operatorLocationArray, numberArray, "-");
+                        numberArray = algoResultArray[0];
+                        operatorLocationArray = algoResultArray[1];
+                        i += 1;
+                        continue;
+                    }
                 }
-                for(let i = 0; i < opCountArray[2]; i++) {
-                    algoResultArray = reduceExpression(operatorLocationArray, numberArray, "+");
-                    numberArray = algoResultArray[0];
-                    operatorLocationArray = algoResultArray[1];
-                }
-                for(let i = 0; i < opCountArray[3]; i++) {
-                    algoResultArray = reduceExpression(operatorLocationArray, numberArray, "-");
-                    numberArray = algoResultArray[0];
-                    operatorLocationArray = algoResultArray[1];
-                }
+
+
+                // opCountArray = getOperatorCount(operatorLocationArray);
+                // for(let i = 0; i < opCountArray[0]; i++) {
+                //         algoResultArray = reduceExpression(operatorLocationArray, numberArray, "*");
+                //         numberArray = algoResultArray[0];
+                //         operatorLocationArray = algoResultArray[1];
+                // }
+                // for(let i = 0; i < opCountArray[1]; i++) {
+                //     algoResultArray = reduceExpression(operatorLocationArray, numberArray, "/");
+                //     numberArray = algoResultArray[0];
+                //     operatorLocationArray = algoResultArray[1];
+                // }
+                // for(let i = 0; i < opCountArray[2]; i++) {
+                //     algoResultArray = reduceExpression(operatorLocationArray, numberArray, "+");
+                //     numberArray = algoResultArray[0];
+                //     operatorLocationArray = algoResultArray[1];
+                // }
+                // for(let i = 0; i < opCountArray[3]; i++) {
+                //     algoResultArray = reduceExpression(operatorLocationArray, numberArray, "-");
+                //     numberArray = algoResultArray[0];
+                //     operatorLocationArray = algoResultArray[1];
+                // }
                 setExpression(numberArray[0].toString());
             }
         } else if (x === ".") {
