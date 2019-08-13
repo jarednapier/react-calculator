@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import './CSS/App.css';
 import Display from './Display';
 import CalculatorPad from './CalculatorPad';
-import { reduceExpression } from './Utilities';
+import { reduceExpression, getOperatorCount } from './Utilities';
 
 const App = () => {
 
     const [expression, setExpression] = useState("0");
 
     const updateDisplay = (x) => {
+        if(Number.parseFloat(expression) < 0) {
+            setExpression("0");
+            return;
+        }
         if (expression === "0") {
             if (x === "+" || x === "-" || x === "*" || x === "/" || x === "=" || x === "AC") {
                 return;
@@ -25,6 +29,8 @@ const App = () => {
             } else {
                 // Perform calculation of expression
                 let finalExpression = expression;
+                let algoResultArray = [];
+                let opCountArray = [];
                 let numberArray = [];
                 let operatorLocationArray = [];
                 let operatorMDLocationArray = [];
@@ -49,10 +55,28 @@ const App = () => {
                         numberArray.push(Number.parseFloat(finalExpression.slice(operatorLocationArray[i][1] + 1)));
                     }
                 }
-                console.log(operatorLocationArray);
-                console.log(numberArray);
-                let test = reduceExpression(operatorLocationArray, numberArray, "*");
-                console.log(test);
+                opCountArray = getOperatorCount(operatorLocationArray);
+                for(let i = 0; i < opCountArray[0]; i++) {
+                        algoResultArray = reduceExpression(operatorLocationArray, numberArray, "*");
+                        numberArray = algoResultArray[0];
+                        operatorLocationArray = algoResultArray[1];
+                }
+                for(let i = 0; i < opCountArray[1]; i++) {
+                    algoResultArray = reduceExpression(operatorLocationArray, numberArray, "/");
+                    numberArray = algoResultArray[0];
+                    operatorLocationArray = algoResultArray[1];
+                }
+                for(let i = 0; i < opCountArray[2]; i++) {
+                    algoResultArray = reduceExpression(operatorLocationArray, numberArray, "+");
+                    numberArray = algoResultArray[0];
+                    operatorLocationArray = algoResultArray[1];
+                }
+                for(let i = 0; i < opCountArray[3]; i++) {
+                    algoResultArray = reduceExpression(operatorLocationArray, numberArray, "-");
+                    numberArray = algoResultArray[0];
+                    operatorLocationArray = algoResultArray[1];
+                }
+                setExpression(numberArray[0].toString());
             }
         } else if (x === ".") {
             let doubleDecimalFlag = false;

@@ -56,3 +56,27 @@ export const reduceExpression = (opArray, numArray, operation) => {
     }
     return [numArray, opArray];
 }
+
+export const getOperatorCount = (opArray) => {
+    let [addCount, subCount, mulCount, divCount] = [0, 0, 0, 0];
+    for(let i = 0; i < opArray.length; i++) {
+        switch(opArray[i][0]) {
+            case "+":
+                addCount += 1;
+                break;
+            case "-":
+                subCount += 1;
+                break;
+            case "*":
+                mulCount += 1;
+                break;
+            case "/":
+                divCount += 1;
+                break;
+            default:
+                console.log("error");
+                break;
+        }
+    }
+    return [mulCount, divCount, addCount, subCount];
+};
