@@ -18,6 +18,38 @@ export const buttonNames = {
     nine: "9"
 };
 
+export const removeLeadingZeros = (str) => {
+    const firstZeroRegex = /^0+/;
+    return str.replace(firstZeroRegex, "");
+
+}
+
+export const handleOperators = (operator, expression) => {
+    return expression + operator;
+}
+
+export const handleSubtraction = (expression) => {
+    return expression + "-";
+}
+
+export const handleDecimal = (expression) => {
+    const doubleDecimalRegex = /\.\d+\./g;
+    const newExpression = expression + ".";
+    if (newExpression.match(doubleDecimalRegex) !== null) {
+        return expression;
+    }
+    return expression + ".";
+}
+
+export const handleNumberInput = (numberString, expression) => {
+    return expression + numberString
+}
+
+export const calculateExpression = (expression) => {
+    return "calculating...";
+}
+
+
 export const arrayReducer = (arr, insert, startRemove, endRemove, opFlag) => {
     if (opFlag) {
         let beginArray = arr.slice(0, startRemove);
@@ -59,8 +91,8 @@ export const reduceExpression = (opArray, numArray, operation) => {
 
 export const getOperatorCount = (opArray) => {
     let [addCount, subCount, mulCount, divCount] = [0, 0, 0, 0];
-    for(let i = 0; i < opArray.length; i++) {
-        switch(opArray[i][0]) {
+    for (let i = 0; i < opArray.length; i++) {
+        switch (opArray[i][0]) {
             case "+":
                 addCount += 1;
                 break;
