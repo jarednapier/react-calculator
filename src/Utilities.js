@@ -18,13 +18,24 @@ export const buttonNames = {
     nine: "9"
 };
 
-export const removeLeadingZeros = (str) => {
-    const firstZeroRegex = /^0+/;
-    return str.replace(firstZeroRegex, "");
-
+const removeLastChar = (str) => {
+    return str.slice(0, str.length - 1);
 }
 
+const removeLeadingZeros = (str) => {
+    while (str[str.length - 1] === "0") {
+        str = str.slice(0, str.length - 1);
+    }
+    return str;
+}
+
+
 export const handleOperators = (operator, expression) => {
+    const doubleOperatorRegex = /[.*/+-]+[.*/+-]$/;
+    const newExpression = expression + operator;
+    if (newExpression.match(doubleOperatorRegex) !== null) {
+        return removeLastChar(expression) + operator;
+    }
     return expression + operator;
 }
 
@@ -42,7 +53,16 @@ export const handleDecimal = (expression) => {
 }
 
 export const handleNumberInput = (numberString, expression) => {
+    const leadingZeroRegex = /^0$|[+*/-]0+$/;
+    const newExpression = expression + numberString;
+    if (expression.match(leadingZeroRegex) !== null) {
+        return removeLastChar(expression) + numberString;
+    }
     return expression + numberString
+}
+
+export const handleZero = (expression) => {
+    return expression + "0";
 }
 
 export const calculateExpression = (expression) => {
