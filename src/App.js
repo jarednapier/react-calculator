@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import './CSS/App.css';
 import Display from './Display';
 import CalculatorPad from './CalculatorPad';
-import { removeLeadingZeros, handleOperators, handleDecimal, handleNumberInput, handleSubtraction, calculateExpression, handleZero } from './Utilities';
+import { handleOperators, handleDecimal, handleNumberInput, handleSubtraction, calculateExpression } from './Utilities';
 
 const App = () => {
 
     const [expression, setExpression] = useState("0");
-    const [numberArray, setNumberArray] = useState([]);
 
     const updateDisplay = (x) => {
         let buttonPushResult = null;
@@ -28,18 +27,18 @@ const App = () => {
             case "7":
             case "8":
             case "9":
-                buttonPushResult = handleNumberInput(x, expression);
-                setExpression(buttonPushResult);
-                break;
             case "0":
-                buttonPushResult = handleZero(expression);
+                buttonPushResult = handleNumberInput(x, expression);
                 setExpression(buttonPushResult);
                 break;
             case "*":
             case "/":
             case "+":
-            case "-":
                 buttonPushResult = handleOperators(x, expression);
+                setExpression(buttonPushResult);
+                break;
+            case "-":
+                buttonPushResult = handleSubtraction(expression);
                 setExpression(buttonPushResult);
                 break;
             case ".":
