@@ -61,6 +61,11 @@ export const handleNumberInput = (numberString, expression) => {
 }
 
 export const calculateExpression = (expression) => {
-    // eslint-disable-next-line
-    return eval(expression);
+    try {
+        // eslint-disable-next-line
+        return eval(expression);
+    }
+    catch {
+        return "error";
+    }
 }
